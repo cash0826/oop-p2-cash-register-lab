@@ -10,7 +10,7 @@ class CashRegister:
     self.discount = discount
     self.total = total
     self.items = []
-    self.transactions = []
+    self.previous_transactions = []
     
   @property
   def discount(self):
@@ -34,7 +34,7 @@ class CashRegister:
       "price": price,
       "quantity": quantity
     }
-    self.transactions.append(new_transaction)
+    self.previous_transactions.append(new_transaction)
     
   def apply_discount(self):
     if self.items == [] or self.discount == 0:
@@ -44,10 +44,10 @@ class CashRegister:
       print(f"After the discount, the total comes to ${self.total:.0f}.") # format with 2 decimal places
     
   def void_last_transaction(self):
-    if self.transactions == []:
+    if self.previous_transactions == []:
       print("There is no transaction to void.")
     else:
-      last_transaction = self.transactions.pop()
+      last_transaction = self.previous_transactions.pop()
       for _ in range(last_transaction["quantity"]):
         self.items.remove(last_transaction["item"])
       self.total -= (last_transaction["price"] * last_transaction["quantity"])
